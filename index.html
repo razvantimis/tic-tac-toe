@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="game.js" defer></script>
 </head>
+
 <body>
     <header>
         <h1>Tic Tac Toe</h1>
@@ -15,15 +17,15 @@
     <main>
         <p>Turn</p>
         <div class="gameboard">
-            <button class="gamecell" data-position="0"></button>
-            <button class="gamecell" data-position="1"></button>
-            <button class="gamecell" data-position="2"></button>
-            <button class="gamecell" data-position="3"></button>
-            <button class="gamecell" data-position="4"></button>
-            <button class="gamecell" data-position="5"></button>
-            <button class="gamecell" data-position="6"></button>
-            <button class="gamecell" data-position="7"></button>
-            <button class="gamecell" data-position="8"></button>
+            <div class="gamecell" data-position="0" data-testid="cell-0"></div>
+            <div class="gamecell" data-position="1" data-testid="cell-1"></div>
+            <div class="gamecell" data-position="2" data-testid="cell-2"></div>
+            <div class="gamecell" data-position="3" data-testid="cell-3"></div>
+            <div class="gamecell" data-position="4" data-testid="cell-4"></div>
+            <div class="gamecell" data-position="5" data-testid="cell-5"></div>
+            <div class="gamecell" data-position="6" data-testid="cell-6"></div>
+            <div class="gamecell" data-position="7" data-testid="cell-7"></div>
+            <div class="gamecell" data-position="8" data-testid="cell-8"></div>
         </div>
         <button type="button">Reset</button>
     </main>
@@ -31,11 +33,11 @@
     <dialog class="names-dialog">
         <form>
             <p class="title">Let's start the game!</p>
-            <p  class="player-name">
+            <p class="player-name">
                 <label for="name1">Player 1's Name:</label>
                 <input type="text" name="name1" id="name1" maxlength="15" required>
             </p>
-            <p  class="player-name">
+            <p class="player-name">
                 <label for="name2">Player 2's Name:</label>
                 <input type="text" name="name2" id="name2" maxlength="15" required>
             </p>
@@ -48,4 +50,5 @@
     </dialog>
 
 </body>
+
 </html>
