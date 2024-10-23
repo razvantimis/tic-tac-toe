@@ -3,10 +3,9 @@ import { test, expect, chromium } from "@playwright/test";
 test("Tic Tac Toe game play", async () => {
   const player1Name = "Razvan";
   const player2Name = "Cosmin";
+
   // Launch the browser
   const browser = await chromium.launch();
-
-  // Create a new page
   const page = await browser.newPage();
 
   // Navigate to the game page
@@ -15,34 +14,39 @@ test("Tic Tac Toe game play", async () => {
   // Start the game by entering player names
   await page.fill("#name1", player1Name); // Fill Player 1's name
   await page.fill("#name2", player2Name); // Fill Player 2's name
-  await page.click(".names-dialog button"); // Confirm names
+  await page.getByRole("button", { name: "Confirm" }).click(); // Confirm names
 
-  // Wait for the result dialog to disappear
+  // Wait for the names dialog to disappear
   await page.waitForSelector(".names-dialog", { state: "hidden" });
 
-  // Player 1 makes their move (X)
-  await page.click('.gamecell[data-position="0"]'); // Player 1 clicks the first cell
-  await expect(page.locator('.gamecell[data-position="0"]')).toHaveText("X"); // Verify Player 1's move
+  // Function to simulate a player move
+  const makeMove = async (position: number, expectedText: string) => {
+    await page.click(`.gamecell[data-position="${position}"]`); // Player clicks the cell
+    await expect(
+      page.locator(`.gamecell[data-position="${position}"]`)
+    ).toHaveText(expectedText); // Verify move
+  };
+
+  // Player 1 makes their moves (X)
+  await makeMove(0, "X");
 
   // Player 2 makes their move (O)
-  await page.click('.gamecell[data-position="1"]'); // Player 2 clicks the second cell
-  await expect(page.locator('.gamecell[data-position="1"]')).toHaveText("O"); // Verify Player 2's move
+  await makeMove(1, "O");
 
   // Player 1 makes another move (X)
-  await page.click('.gamecell[data-position="3"]'); // Player 1 clicks the fourth cell
-  await expect(page.locator('.gamecell[data-position="3"]')).toHaveText("X"); // Verify Player 1's move
+  await makeMove(3, "X");
 
   // Player 2 makes another move (O)
-  await page.click('.gamecell[data-position="4"]'); // Player 2 clicks the fifth cell
-  await expect(page.locator('.gamecell[data-position="4"]')).toHaveText("O"); // Verify Player 2's move
+  await makeMove(4, "O");
 
   // Player 1 makes the last move to win (X)
-  await page.click('.gamecell[data-position="6"]'); // Player 1 clicks the seventh cell
-  await expect(page.locator('.gamecell[data-position="6"]')).toHaveText("X"); // Verify Player 1's winning move
+  await makeMove(6, "X");
 
   // Check for the winning condition
   await expect(page.locator(".result-dialog")).toBeVisible(); // Verify that the result dialog is visible
-  await expect(page.locator(".result-dialog h1")).toHaveText(`${player1Name} Wins!`); // Verify win message
+  await expect(
+    page.getByRole("heading", { name: `${player1Name} Wins!` })
+  ).toBeVisible(); // Verify win message
 
   // Close the browser
   await browser.close();
