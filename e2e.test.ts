@@ -21,10 +21,9 @@ test("Tic Tac Toe game play", async () => {
 
   // Function to simulate a player move
   const makeMove = async (position: number, expectedText: string) => {
-    await page.click(`.gamecell[data-position="${position}"]`); // Player clicks the cell
-    await expect(
-      page.locator(`.gamecell[data-position="${position}"]`)
-    ).toHaveText(expectedText); // Verify move
+    const cell = page.getByTestId(`cell-${position}`);
+    await cell.click(); // Player clicks the cell
+    await expect(cell).toHaveText(expectedText); // Verify move
   };
 
   // Player 1 makes their moves (X)
